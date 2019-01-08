@@ -64,7 +64,7 @@
     <fragment
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:name="pt.dg7.controney.TransactionFragment"
+            android:name="pt.dg7.controney.fragments.TransactionFragment"
             android:id="@+id/fragment"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
             app:layout_constraintBottom_toBottomOf="parent"

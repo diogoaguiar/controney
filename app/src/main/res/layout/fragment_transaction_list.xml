@@ -8,5 +8,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:context=".TransactionFragment"
+        tools:context=".fragments.TransactionFragment"
         tools:listitem="@layout/fragment_transaction"/>

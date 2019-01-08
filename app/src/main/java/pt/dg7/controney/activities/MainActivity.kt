@@ -12,11 +12,12 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import pt.dg7.controney.R
-import pt.dg7.controney.TransactionFragment
-import pt.dg7.controney.dummy.DummyContent
 import pt.dg7.controney.models.Bank
+import pt.dg7.controney.models.Transaction
 
-class MainActivity : AppCompatActivity(), TransactionFragment.OnListFragmentInteractionListener {
+
+
+class MainActivity : AppCompatActivity() {
     companion object {
         const val TAG = "MainActivity"
         const val RC_SIGN_IN = 100
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity(), TransactionFragment.OnListFragmentInte
     var user : FirebaseUser? = null
     private val db = FirebaseFirestore.getInstance()
     private var bank = Bank()
+    private var transactions = arrayListOf<Transaction>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,9 +98,21 @@ class MainActivity : AppCompatActivity(), TransactionFragment.OnListFragmentInte
                 }
             }
 
-    }
-
-    override fun onListFragmentInteraction(item: DummyContent.DummyItem?) {
-        // Do Nothing
+        // Transactions
+        db.collection("transactions")
+            .whereEqualTo("user", user!!.uid)
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    for (item in it.result!!) {
+                        transactions.add(Transaction(
+                            item.getDouble("amount")!!,
+                            item.getDate("created_at")!!,
+                            item.getString("type")!!))
+                    }
+                } else {
+                    Log.w(TAG, "Error getting documents.", it.exception)
+                }
+            }
     }
 }
