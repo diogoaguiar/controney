@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Controney</string>
+    <string name="transactions">Transactions</string>
+    <string name="balance">Balance</string>
+    <string name="eur">EUR</string>
+    <string name="deposit">Deposit</string>
+    <string name="withdraw">Withdraw</string>
+    <string name="recalculate_balance">Recalculate balance</string>
+    <string name="refresh">Refresh</string>
+    <string name="confirm">Confirm</string>
 </resources>
