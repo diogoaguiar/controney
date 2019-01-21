@@ -27,6 +27,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    // Material Design
+    implementation 'com.google.android.material:material:1.0.0'
+
     // AndroidX
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
@@ -38,6 +41,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.1.0'
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-firestore:17.1.5'
+
+    // Navigation
+    implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha09" // use -ktx for Kotlin
+    implementation "android.arch.navigation:navigation-ui-ktx:1.0.0-alpha09" // use -ktx for Kotlin
 
     // Tests
     testImplementation 'junit:junit:4.12'
