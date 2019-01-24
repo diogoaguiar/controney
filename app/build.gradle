@@ -43,8 +43,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:17.1.5'
 
     // Navigation
-    implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha09" // use -ktx for Kotlin
-    implementation "android.arch.navigation:navigation-ui-ktx:1.0.0-alpha09" // use -ktx for Kotlin
+    implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha09"
+    implementation "android.arch.navigation:navigation-ui-ktx:1.0.0-alpha09"
 
     // Tests
     testImplementation 'junit:junit:4.12'

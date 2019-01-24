@@ -8,4 +8,5 @@
     <string name="recalculate_balance">Recalculate balance</string>
     <string name="refresh">Refresh</string>
     <string name="confirm">Confirm</string>
+    <string name="logout">Logout</string>
 </resources>
