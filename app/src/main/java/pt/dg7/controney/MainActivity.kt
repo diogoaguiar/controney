@@ -146,6 +146,14 @@ class MainActivity : AppCompatActivity() {
             viewModel.getTransactions()
             true
         }
+        R.id.action_logout -> {
+            AuthUI.getInstance().signOut(this)
+                .addOnSuccessListener {
+                    viewModel.setUser(null)
+                    recreate()
+                }
+            true
+        }
         else -> super.onOptionsItemSelected(item)
     }
 }
