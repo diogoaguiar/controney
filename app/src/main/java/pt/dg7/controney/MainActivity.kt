@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import pt.dg7.controney.adapters.TransactionsRecyclerViewAdapter
 import pt.dg7.controney.viewmodels.MainViewModel
 import java.text.NumberFormat
-import java.util.*
+import java.util.Locale
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         private const val TAG = "MainActivity"
         private const val RC_SIGN_IN = 100
         private const val RC_NEW_TRANSACTION = 101
+        private const val PARAM_SIGNING_IN_STATUS = "signing_in"
     }
 
     private val providers = arrayListOf(AuthUI.IdpConfig.EmailBuilder().build())
@@ -36,7 +37,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        if (savedInstanceState !== null) {
+            signingIn = savedInstanceState.getBoolean(PARAM_SIGNING_IN_STATUS, signingIn)
+        }
+
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState?.run {
+            putBoolean(PARAM_SIGNING_IN_STATUS, signingIn)
+        }
+        super.onSaveInstanceState(outState)
     }
 
     fun init() {
@@ -93,10 +105,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        signingIn = false
 
         when(requestCode) {
             RC_SIGN_IN -> {
+                signingIn = false
                 if (resultCode == Activity.RESULT_OK) {
                     // Successfully signed in
                     val user = FirebaseAuth.getInstance().currentUser

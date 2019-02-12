@@ -7,7 +7,8 @@ class Transaction(val id: String?,
                   var amount: Double,
                   var date: Date,
                   var type: String,
-                  val user: String) {
+                  val user: String,
+                  val description: String?) {
 
     fun hashMap(): HashMap<String, Any> {
         val map = HashMap<String, Any>()
@@ -19,6 +20,9 @@ class Transaction(val id: String?,
         map["created_at"] = date
         map["type"] = type
         map["user"] = user
+        if (description !== null) {
+            map["description"] = description
+        }
 
         return map
     }
