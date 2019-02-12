@@ -15,10 +15,18 @@ class NewTransactionViewModel : ViewModel() {
     val amount: LiveData<Double>
         get() = _amount
 
+    private val _description = MutableLiveData<String>()
+    val description: LiveData<String?>
+        get() = _description
+
     private val user = FirebaseAuth.getInstance().currentUser
     private val _bank = FirestoreRepository.getBank(user)
     val bank: LiveData<Bank>
         get() = _bank
+
+    val _type = MutableLiveData<String>()
+    val type: LiveData<String>
+        get() = _type
 
     init {
         _amount.value = 0.0
@@ -28,15 +36,24 @@ class NewTransactionViewModel : ViewModel() {
         _amount.value = value
     }
 
+    fun setType(type: CharSequence?) {
+        _type.value = type?.toString()
+    }
+
     fun confirm(): Task<Void> {
         val transaction = Transaction(
             null,
             _amount.value!!,
             Date(),
-            if (_amount.value!! > 0.0) "deposit" else "withdraw",
-            user!!.uid
+            _type.value?.toLowerCase() ?: "withdraw",
+            user!!.uid,
+            _description.value
         )
 
         return FirestoreRepository.addTransaction(bank.value!!, transaction)
+    }
+
+    fun setDescription(description: String?) {
+        _description.value = description
     }
 }

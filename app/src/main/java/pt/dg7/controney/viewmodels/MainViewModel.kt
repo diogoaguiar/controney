@@ -44,8 +44,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun recalculateBalance() {
         var balance = 0.0
-        _transactions.value?.forEach {
-            balance += it.amount
+        val transactions = ArrayList<Transaction>()
+        transactions.addAll(_transactions.value ?: listOf())
+        transactions.sortWith(Comparator { t1, t2 ->
+            if (t1.date.before(t2.date)) -1 else 1
+        })
+        transactions.forEach {
+            when (it.type) {
+                "withdraw" -> balance -= Math.abs(it.amount)
+                "deposit" -> balance += Math.abs(it.amount)
+                "check" -> balance = Math.abs(it.amount)
+            }
         }
 
         _bank.value?.balance = balance

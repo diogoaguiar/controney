@@ -9,4 +9,13 @@
     <string name="refresh">Refresh</string>
     <string name="confirm">Confirm</string>
     <string name="logout">Logout</string>
+    <string name="check">Check</string>
+    <string name="value">Value</string>
+    <string name="description">Description</string>
+
+    <string-array name="transaction_types">
+        <item>Withdraw</item>
+        <item>Deposit</item>
+        <item>Check</item>
+    </string-array>
 </resources>

@@ -21,7 +21,6 @@ object FirestoreRepository {
         transactions.value = listOf()
 
         FirebaseFirestore.getInstance().firestoreSettings = FirebaseFirestoreSettings.Builder()
-            .setTimestampsInSnapshotsEnabled(true)
             .build()
     }
 
@@ -40,7 +39,8 @@ object FirestoreRepository {
                                 item.getDouble("amount")!!,
                                 item.getDate("created_at")!!,
                                 item.getString("type")!!,
-                                item.getString("user")!!
+                                item.getString("user")!!,
+                                item.getString("description")
                             )
                         )
                     }
@@ -103,7 +103,12 @@ object FirestoreRepository {
             .set(data)
             .addOnSuccessListener {
                 Log.d(TAG, "Transaction added")
-                setBalance(bank, bank.balance + transaction.amount)
+
+                setBalance(bank, when (transaction.type) {
+                    "deposit" -> bank.balance + Math.abs(transaction.amount)
+                    "check" -> Math.abs(transaction.amount)
+                    else -> bank.balance - Math.abs(transaction.amount)
+                })
             }
             .addOnFailureListener {
                 Log.d(TAG, "Failed to add transaction")

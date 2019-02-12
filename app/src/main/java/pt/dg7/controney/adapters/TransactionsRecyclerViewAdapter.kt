@@ -29,22 +29,34 @@ class TransactionsRecyclerViewAdapter(
         val item = transactions[position]
         holder.date.text = item.date.toString()
         holder.action.text = item.type
-        holder.amount.text = NumberFormat.getCurrencyInstance(Locale("pt", "PT")).format(item.amount)
 
         when (item.type) {
             "deposit" -> {
-                holder.action.text = context.getString(R.string.deposit)
+                holder.action.text = item.description ?: context.getString(R.string.deposit)
                 holder.action.setTextColor(context.getColor(R.color.deposit))
                 holder.amount.setTextColor(context.getColor(R.color.deposit))
                 holder.icon.setImageResource(R.drawable.ic_arrow_downward_black_24dp)
                 holder.icon.setColorFilter(context.getColor(R.color.deposit))
+                holder.amount.text = NumberFormat.getCurrencyInstance(Locale("pt", "PT"))
+                    .format(item.amount)
             }
             "withdraw" -> {
-                holder.action.text = context.getString(R.string.withdraw)
+                holder.action.text = item.description ?: context.getString(R.string.withdraw)
                 holder.action.setTextColor(context.getColor(R.color.withdraw))
                 holder.amount.setTextColor(context.getColor(R.color.withdraw))
                 holder.icon.setImageResource(R.drawable.ic_arrow_upward_black_24dp)
                 holder.icon.setColorFilter(context.getColor(R.color.withdraw))
+                holder.amount.text = NumberFormat.getCurrencyInstance(Locale("pt", "PT"))
+                    .format(-Math.abs(item.amount))
+            }
+            "check" -> {
+                holder.action.text = item.description ?: context.getString(R.string.check)
+                holder.action.setTextColor(context.getColor(R.color.check))
+                holder.amount.setTextColor(context.getColor(R.color.check))
+                holder.icon.setImageResource(R.drawable.ic_check_black_24dp)
+                holder.icon.setColorFilter(context.getColor(R.color.check))
+                holder.amount.text = NumberFormat.getCurrencyInstance(Locale("pt", "PT"))
+                    .format(item.amount)
             }
         }
 
